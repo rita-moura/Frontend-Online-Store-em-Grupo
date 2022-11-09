@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import Cart from './pages/Cart';
 import ProductListing from './pages/ProductListing';
 
 function App() {
@@ -10,6 +11,11 @@ function App() {
         exact
         path="/"
         component={ ProductListing }
+      />
+      <Route
+        exact
+        path="/cart"
+        component={ Cart }
       />
     </Switch>
   );
