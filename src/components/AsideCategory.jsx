@@ -9,10 +9,7 @@ class AsideCategory extends Component {
 
   async componentDidMount() {
     const response = await getCategories();
-    this.setState((prev) => ({
-      ...prev,
-      guardCategories: response,
-    }));
+    this.setState({ guardCategories: response });
   }
 
   render() {
@@ -21,9 +18,9 @@ class AsideCategory extends Component {
     return (
       <aside>
         <h3>Categorias</h3>
-        {guardCategories.map(({ name }) => (
+        {guardCategories.map(({ name, id }) => (
           <CartAside
-            key={ Math.random() }
+            key={ id }
             name={ name }
           />
         ))}
