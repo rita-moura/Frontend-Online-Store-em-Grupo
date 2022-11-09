@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class ProductListing extends Component {
   state = {
@@ -11,6 +12,12 @@ export default class ProductListing extends Component {
     return (
       <section>
         <input type="text" />
+        <Link
+          to="/cart"
+          data-testid="shopping-cart-button"
+        >
+          Cart
+        </Link>
         {
           !productList.legth
             ? (
