@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { CartSvg } from '../assets/ExportImages';
 
 export default class ProductListing extends Component {
   state = {
@@ -16,7 +17,7 @@ export default class ProductListing extends Component {
           to="/cart"
           data-testid="shopping-cart-button"
         >
-          Cart
+          <CartSvg stroke="blue" />
         </Link>
         {
           !productList.legth

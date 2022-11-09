@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { BackSvg } from '../assets/ExportImages';
 
 export default class Cart extends Component {
   state = {
@@ -10,6 +12,12 @@ export default class Cart extends Component {
 
     return (
       <main>
+        <Link
+          to="/"
+        >
+          <BackSvg />
+          Voltar
+        </Link>
         {
           !CartState.length ? (
             <h2 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h2>
