@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class CartAside extends Component {
+export default class CartAside extends Component {
   render() {
     const { name, id, handleChange } = this.props;
     return (
@@ -26,5 +26,3 @@ CartAside.propTypes = {
   id: PropTypes.number,
   handleChange: PropTypes.func,
 }.isRequired;
-
-export default CartAside;

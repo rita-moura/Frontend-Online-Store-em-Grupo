@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getCategories } from '../services/api';
 import AsideCart from './AsideCart';
 
-class AsideCategory extends Component {
+export default class AsideCategory extends Component {
   state = {
     guardCategories: [],
   };
@@ -36,5 +36,3 @@ class AsideCategory extends Component {
 AsideCategory.propTypes = {
   handleChange: PropTypes.func.isRequired,
 };
-
-export default AsideCategory;
