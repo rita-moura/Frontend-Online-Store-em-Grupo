@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 
 class CartAside extends Component {
   render() {
-    const { name } = this.props;
+    const { name, id, handleChange } = this.props;
     return (
       <div>
         <label htmlFor="category" data-testid="category">
-          <input type="radio" id="category" />
+          <input
+            type="radio"
+            id="category"
+            name="cartegorySelected"
+            value={ id }
+            onChange={ handleChange }
+          />
           { name }
         </label>
       </div>
@@ -16,7 +22,9 @@ class CartAside extends Component {
 }
 
 CartAside.propTypes = {
-  name: PropTypes.string.isRequired,
-};
+  name: PropTypes.string,
+  id: PropTypes.number,
+  handleChange: PropTypes.func,
+}.isRequired;
 
 export default CartAside;
