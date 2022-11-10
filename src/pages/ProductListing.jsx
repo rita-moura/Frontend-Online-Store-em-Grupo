@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AsideCategory from '../components/AsideCategory';
 import { CartSvg } from '../assets/ExportImages';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import ProductCard from '../components/ProductCard';
 
 export default class ProductListing extends Component {
   state = {
@@ -33,11 +34,11 @@ export default class ProductListing extends Component {
   render() {
     const { productList, searchValue, searched } = this.state;
 
-    let productsResults = productList.map(({ title, price, id }) => (
-      <div data-testid="product" key={ id }>
-        <h2>{ title }</h2>
-        <h2>{ price }</h2>
-      </div>
+    let productsResults = productList.map((productInfos) => (
+      <ProductCard
+        key={ productInfos.id }
+        { ...productInfos }
+      />
     ));
     productsResults = productsResults.length ? productsResults
       : <p>Nenhum produto foi encontrado</p>;
