@@ -8,7 +8,7 @@ export default class ProductListing extends Component {
   state = {
     productList: [],
     searchValue: '',
-    produtos: [],
+    searched: false,
   };
 
   productSearch = ({ target }) => {
@@ -22,19 +22,30 @@ export default class ProductListing extends Component {
     event.preventDefault();
     const { searchValue } = this.state;
     const produtos = await getProductsFromCategoryAndQuery(null, searchValue);
-    console.log(produtos.results);
+
     this.setState(({
-      produtos: produtos.results,
+      productList: produtos.results,
       searchValue: '',
+      searched: true,
     }));
   };
 
   render() {
-    const { productList, searchValue, produtos } = this.state;
+    const { productList, searchValue, searched } = this.state;
+
+    let productsResults = productList.map(({ title, price, id }) => (
+      <div data-testid="product" key={ id }>
+        <h2>{ title }</h2>
+        <h2>{ price }</h2>
+      </div>
+    ));
+    productsResults = productsResults.length ? productsResults
+      : <p>Nenhum produto foi encontrado</p>;
 
     return (
       <main>
         <input
+          type="text"
           data-testid="query-input"
           onChange={ this.productSearch }
           value={ searchValue }
@@ -46,37 +57,25 @@ export default class ProductListing extends Component {
         >
           Buscar
         </button>
-        { produtos.length > 0 ? produtos.map(({ title, price, id }) => (
-          <div data-testid="product" key={ id }>
-            <h2>{ title }</h2>
-            <h2>{ price }</h2>
-          </div>
-        ))
-          : <p>Nenhum produto foi encontrado</p>}
 
-        <section>
-          <input type="text" />
-          <Link
-            to="/cart"
-            data-testid="shopping-cart-button"
-          >
-            <CartSvg stroke="blue" />
-          </Link>
-          {
-            !productList.legth
-              ? (
-                <h2
-                  data-testid="home-initial-message"
-                >
-                  Digite algum termo de pesquisa ou escolha uma categoria.
-                </h2>
-              ) : (
-                productList.map((product, index) => (
-                  <div key={ index }>Generic message</div>
-                ))
-              )
-          }
-        </section>
+        <Link
+          to="/cart"
+          data-testid="shopping-cart-button"
+        >
+          <CartSvg stroke="blue" />
+        </Link>
+        {
+          (!productList.length && !searched) && (
+            <h2
+              data-testid="home-initial-message"
+            >
+              Digite algum termo de pesquisa ou escolha uma categoria.
+            </h2>
+          )
+        }
+        {
+          searched && productsResults
+        }
         <AsideCategory />
       </main>
     );
