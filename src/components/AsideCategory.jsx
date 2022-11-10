@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getCategories } from '../services/api';
-import CartAside from './CartAside';
+import AsideCart from './AsideCart';
 
-class AsideCategory extends Component {
+export default class AsideCategory extends Component {
   state = {
     guardCategories: [],
   };
@@ -21,7 +21,7 @@ class AsideCategory extends Component {
       <aside>
         <h3>Categorias</h3>
         {guardCategories.map(({ name, id }) => (
-          <CartAside
+          <AsideCart
             key={ id }
             name={ name }
             id={ id }
@@ -36,5 +36,3 @@ class AsideCategory extends Component {
 AsideCategory.propTypes = {
   handleChange: PropTypes.func.isRequired,
 };
-
-export default AsideCategory;
