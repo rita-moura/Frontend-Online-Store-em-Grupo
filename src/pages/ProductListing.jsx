@@ -10,6 +10,7 @@ export default class ProductListing extends Component {
     productList: [],
     searchValue: '',
     searched: false,
+    cartegorySelected: '',
   };
 
   productSearch = ({ target }) => {
@@ -29,6 +30,20 @@ export default class ProductListing extends Component {
       searchValue: '',
       searched: true,
     }));
+  };
+
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, async () => {
+      const { cartegorySelected } = this.state;
+      const productList = await getProductsFromCategoryAndQuery(cartegorySelected, null);
+      this.setState({
+        productList: productList.results,
+        searched: true,
+      });
+    });
   };
 
   render() {
@@ -67,17 +82,17 @@ export default class ProductListing extends Component {
         </Link>
         {
           (!productList.length && !searched) && (
-            <h2
+            <h3
               data-testid="home-initial-message"
             >
               Digite algum termo de pesquisa ou escolha uma categoria.
-            </h2>
+            </h3>
           )
         }
         {
           searched && productsResults
         }
-        <AsideCategory />
+        <AsideCategory handleChange={ this.handleChange } />
       </main>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getCategories } from '../services/api';
 import CartAside from './CartAside';
 
@@ -14,6 +15,7 @@ class AsideCategory extends Component {
 
   render() {
     const { guardCategories } = this.state;
+    const { handleChange } = this.props;
 
     return (
       <aside>
@@ -22,11 +24,17 @@ class AsideCategory extends Component {
           <CartAside
             key={ id }
             name={ name }
+            id={ id }
+            handleChange={ handleChange }
           />
         ))}
       </aside>
     );
   }
 }
+
+AsideCategory.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+};
 
 export default AsideCategory;
