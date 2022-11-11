@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import DetailsCart from '../components/DetailsCart';
 import { BackSvg } from '../assets/ExportImages';
 import { getProductById } from '../services/api';
+import { addCartItem } from '../services/cartManipulation';
 
 export default class ProductDetails extends Component {
   state = {
@@ -22,10 +23,6 @@ export default class ProductDetails extends Component {
 
     return (
       <div>
-        <h1>Descrição do Produto</h1>
-        <DetailsCart
-          { ...guardProducts }
-        />
         <Link
           data-testid="shopping-cart-button"
           to="/cart"
@@ -33,6 +30,17 @@ export default class ProductDetails extends Component {
           <BackSvg />
           Voltar
         </Link>
+        <h1>Descrição do Produto</h1>
+        <DetailsCart
+          { ...guardProducts }
+        />
+        <button
+          type="button"
+          data-testid="product-add-to-cart"
+          onClick={ () => addCartItem(guardProducts) }
+        >
+          Adicionar ao carrinho
+        </button>
       </div>
     );
   }

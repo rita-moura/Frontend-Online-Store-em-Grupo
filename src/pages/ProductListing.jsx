@@ -5,6 +5,7 @@ import { CartSvg } from '../assets/ExportImages';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import '../assets/styles/Header.css';
+import { addCartItem } from '../services/cartManipulation';
 
 export default class ProductListing extends Component {
   state = {
@@ -51,10 +52,18 @@ export default class ProductListing extends Component {
     const { productList, searchValue, searched } = this.state;
 
     let productsResults = productList.map((productInfos) => (
-      <ProductCard
-        key={ productInfos.id }
-        { ...productInfos }
-      />
+      <section key={ productInfos.id }>
+        <ProductCard
+          { ...productInfos }
+        />
+        <button
+          type="button"
+          data-testid="product-add-to-cart"
+          onClick={ () => addCartItem(productInfos) }
+        >
+          Adicionar ao carrinho
+        </button>
+      </section>
     ));
     productsResults = productsResults.length ? productsResults
       : <p>Nenhum produto foi encontrado</p>;
