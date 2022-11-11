@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { BackSvg } from '../assets/ExportImages';
+import ProductCard from '../components/ProductCard';
+import { getCartFromLocal } from '../services/cartManipulation';
 
 export default class Cart extends Component {
   state = {
-    CartState: [],
+    guardProduct: [],
   };
 
+  componentDidMount() {
+    if (localStorage.cartItems) {
+      const guardProduct = getCartFromLocal();
+      this.setState({ guardProduct });
+    }
+  }
+
   render() {
-    const { CartState } = this.state;
+    const { guardProduct } = this.state;
 
     return (
       <main>
@@ -19,11 +28,14 @@ export default class Cart extends Component {
           Voltar
         </Link>
         {
-          !CartState.length ? (
+          !guardProduct.length ? (
             <h2 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h2>
           ) : (
-            CartState.map((cartProduct, index) => (
-              <div key={ index }>Generic Message</div>
+            guardProduct.map((cartProduct) => (
+              <ProductCard
+                key={ cartProduct.id }
+                { ...cartProduct }
+              />
             ))
           )
         }
