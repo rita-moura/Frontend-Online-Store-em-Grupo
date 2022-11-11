@@ -1,0 +1,23 @@
+.Header {
+  align-items: center;
+  background-color: #003be5;
+  display: flex;
+  justify-content: space-between;
+  padding: 35px 50px;
+  width: 100%;
+}
+
+.Header .search-form {
+  display: flex;
+}
+
+.Header .search-form .search-form-input, .search-form-button {
+  border: none;
+  padding: 8px;
+}
+
+.search-form-button {
+  background-color: #2fc18c;
+  border: none;
+  color: white;
+}

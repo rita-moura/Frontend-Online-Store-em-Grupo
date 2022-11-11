@@ -4,6 +4,7 @@ import AsideCategory from '../components/AsideCategory';
 import { CartSvg } from '../assets/ExportImages';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../components/ProductCard';
+import '../assets/styles/Header.css';
 
 export default class ProductListing extends Component {
   state = {
@@ -60,26 +61,32 @@ export default class ProductListing extends Component {
 
     return (
       <main>
-        <input
-          type="text"
-          data-testid="query-input"
-          onChange={ this.productSearch }
-          value={ searchValue }
-        />
-        <button
-          data-testid="query-button"
-          type="button"
-          onClick={ this.search }
-        >
-          Buscar
-        </button>
-
-        <Link
-          to="/cart"
-          data-testid="shopping-cart-button"
-        >
-          <CartSvg stroke="blue" />
-        </Link>
+        <header className="Header">
+          <form className="search-form" onSubmit={ this.search }>
+            <input
+              className="search-form-input"
+              type="text"
+              data-testid="query-input"
+              onChange={ this.productSearch }
+              value={ searchValue }
+              placeholder="Digite o que você busca"
+            />
+            <button
+              className="search-form-button"
+              data-testid="query-button"
+              type="button"
+              onClick={ this.search }
+            >
+              Buscar
+            </button>
+          </form>
+          <Link
+            to="/cart"
+            data-testid="shopping-cart-button"
+          >
+            <CartSvg stroke="blue" />
+          </Link>
+        </header>
         {
           (!productList.length && !searched) && (
             <h3
