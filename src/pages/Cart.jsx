@@ -10,11 +10,15 @@ export default class Cart extends Component {
   };
 
   componentDidMount() {
+    this.updateCart();
+  }
+
+  updateCart = () => {
     if (localStorage.cartItems) {
       const guardProduct = getCartFromLocal();
       this.setState({ guardProduct });
     }
-  }
+  };
 
   render() {
     const { guardProduct } = this.state;
@@ -33,6 +37,7 @@ export default class Cart extends Component {
           ) : (
             guardProduct.map((cartProduct) => (
               <ProductCard
+                updateCart={ this.updateCart }
                 key={ cartProduct.id }
                 { ...cartProduct }
               />
