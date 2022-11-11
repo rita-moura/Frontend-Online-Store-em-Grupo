@@ -28,7 +28,7 @@ export default class ProductDetails extends Component {
           to="/cart"
         >
           <BackSvg />
-          Voltar
+          Carrinho de compras
         </Link>
         <h1>Descrição do Produto</h1>
         <DetailsCart
@@ -36,7 +36,8 @@ export default class ProductDetails extends Component {
         />
         <button
           type="button"
-          data-testid="product-add-to-cart"
+          // data-testid="product-add-to-cart"
+          data-testid="product-detail-add-to-cart"
           onClick={ () => addCartItem(guardProducts) }
         >
           Adicionar ao carrinho
