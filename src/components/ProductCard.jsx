@@ -6,7 +6,6 @@ import '../assets/styles/ProductCard.css';
 export default class ProductCard extends Component {
   render() {
     const { title, price, thumbnail, id, quantity } = this.props;
-    console.log(quantity, window.location.pathname);
     return (
       <Link
         data-testid="product-detail-link"
