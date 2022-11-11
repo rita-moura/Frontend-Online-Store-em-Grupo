@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getCategories } from '../services/api';
 import AsideCart from './AsideCart';
+import '../assets/styles/AsideCategory.css';
 
 export default class AsideCategory extends Component {
   state = {
@@ -18,7 +19,7 @@ export default class AsideCategory extends Component {
     const { handleChange } = this.props;
 
     return (
-      <aside>
+      <aside className="categories">
         <h3>Categorias</h3>
         {guardCategories.map(({ name, id }) => (
           <AsideCart

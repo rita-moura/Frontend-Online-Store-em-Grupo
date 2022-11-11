@@ -87,19 +87,23 @@ export default class ProductListing extends Component {
             <CartSvg stroke="blue" />
           </Link>
         </header>
-        {
-          (!productList.length && !searched) && (
-            <h3
-              data-testid="home-initial-message"
-            >
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </h3>
-          )
-        }
-        {
-          searched && productsResults
-        }
-        <AsideCategory handleChange={ this.handleChange } />
+        <main className="flex-row">
+          <AsideCategory handleChange={ this.handleChange } />
+          <section className="flex-row flex-wrap">
+            {
+              (!productList.length && !searched) && (
+                <h3
+                  data-testid="home-initial-message"
+                >
+                  Digite algum termo de pesquisa ou escolha uma categoria.
+                </h3>
+              )
+            }
+            {
+              searched && productsResults
+            }
+          </section>
+        </main>
       </main>
     );
   }
