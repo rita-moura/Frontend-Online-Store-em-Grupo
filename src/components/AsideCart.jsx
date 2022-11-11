@@ -6,10 +6,10 @@ export default class CartAside extends Component {
     const { name, id, handleChange } = this.props;
     return (
       <div>
-        <label htmlFor="category" data-testid="category">
+        <label htmlFor={ id } data-testid="category">
           <input
             type="radio"
-            id="category"
+            id={ id }
             name="cartegorySelected"
             value={ id }
             onChange={ handleChange }

@@ -4,6 +4,7 @@ import './App.css';
 import Cart from './pages/Cart';
 import ProductListing from './pages/ProductListing';
 import ProductDetails from './pages/ProductDetails';
+import './assets/styles/GeneralStyles.css';
 
 function App() {
   return (
