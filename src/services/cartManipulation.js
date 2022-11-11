@@ -15,3 +15,26 @@ export const addCartItem = (item) => {
   }
   localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
 };
+
+export const increaseQuantity = (item) => {
+  const savedCartItems = getCartFromLocal();
+  const index = savedCartItems.findIndex((product) => product.id === item.id);
+  savedCartItems[index].quantity += 1;
+  localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
+};
+
+export const decreaseQuantity = (item) => {
+  const savedCartItems = getCartFromLocal();
+  const index = savedCartItems.findIndex((product) => product.id === item.id);
+  console.log(savedCartItems);
+  if (savedCartItems[index].quantity === 1) return;
+  savedCartItems[index].quantity -= 1;
+  localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
+};
+
+export const removeProduct = (item) => {
+  const savedCartItems = getCartFromLocal();
+  const index = savedCartItems.findIndex((product) => product.id === item.id);
+  savedCartItems.splice(index, 1);
+  localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
+};
