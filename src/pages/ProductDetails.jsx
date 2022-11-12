@@ -6,6 +6,8 @@ import { BackSvg } from '../assets/ExportImages';
 import { getProductById } from '../services/api';
 import { addCartItem } from '../services/cartManipulation';
 
+const MAX_NUMBER = 5;
+
 export default class ProductDetails extends Component {
   state = {
     guardProducts: {},
@@ -52,8 +54,8 @@ export default class ProductDetails extends Component {
   };
 
   validateForm = () => {
-    const verifyTotal = this.isFormValid();
-    this.setState({ erro: verifyTotal }, this.setProductEvaluation);
+    const erro = this.isFormValid();
+    this.setState({ erro }, this.setProductEvaluation);
   };
 
   handleClick = (event) => {
@@ -64,10 +66,8 @@ export default class ProductDetails extends Component {
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value }, () => {
-      const isValid = this.isFormValid();
-      this.setState({
-        erro: isValid,
-      });
+      const erro = this.isFormValid();
+      this.setState({ erro });
     });
   };
 
@@ -100,12 +100,10 @@ export default class ProductDetails extends Component {
     this.clearInputs();
   };
 
-  render() {
-    const { guardProducts, erro, email, text, comments } = this.state;
-    const array = [];
-    const MAX_NUMBER = 5;
+  generateRadios = () => {
+    const radios = [];
     for (let index = 1; index <= MAX_NUMBER; index += 1) {
-      array.push(
+      radios.push(
         <label
           htmlFor={ `${index}-rating` }
           data-testid={ `${index}-rating` }
@@ -122,6 +120,12 @@ export default class ProductDetails extends Component {
         </label>,
       );
     }
+    return radios;
+  };
+
+  render() {
+    const { guardProducts, erro, email, text, comments } = this.state;
+    const radios = this.generateRadios();
 
     return (
       <div>
@@ -152,7 +156,7 @@ export default class ProductDetails extends Component {
             placeholder="email"
             onChange={ this.handleChange }
           />
-          { array }
+          { radios }
           <div>
             <textarea
               data-testid="product-detail-evaluation"
