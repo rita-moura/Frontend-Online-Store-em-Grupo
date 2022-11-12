@@ -8,41 +8,67 @@ import { addCartItem } from '../services/cartManipulation';
 
 export default class ProductDetails extends Component {
   state = {
-    guardProducts: [],
+    guardProducts: {},
     email: '',
     rating: '',
-    erro: false,
+    erro: true,
     text: '',
+    comments: [],
   };
 
   async componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
     const product = await getProductById(id);
-    this.setState({ guardProducts: product });
+    this.setState({
+      guardProducts: product,
+      comments: this.getProductEvaluation(),
+    });
   }
 
-  validateForm = () => {
+  shouldComponentUpdate(nextProps, nextState) {
+    const { comments, email, rating, text, guardProducts } = this.state;
+    const changeEmail = email !== nextState.email;
+    const changeRating = rating !== nextState.rating;
+    const changeText = text !== nextState.text;
+    const changeComments = comments.length !== nextState.comments.length;
+    const hasId = guardProducts.id !== nextState.guardProducts.id;
+    return hasId || changeEmail || changeRating || changeText || changeComments;
+  }
+
+  componentDidUpdate() {
+    this.setState({
+      comments: this.getProductEvaluation(),
+    });
+  }
+
+  isFormValid = () => {
     const { email, rating } = this.state;
     const regex = /\S+@\S+\.\S+/;
     const verifyEmail = email.length === 0;
     const verify = !regex.test(email);
     const verifyRating = rating.length === 0;
-    const verifyTotal = verifyEmail || verifyRating || verify;
-    this.setState({ erro: verifyTotal }, this.setProductEvaluation());
+    return verifyEmail || verifyRating || verify;
+  };
+
+  validateForm = () => {
+    const verifyTotal = this.isFormValid();
+    this.setState({ erro: verifyTotal }, this.setProductEvaluation);
   };
 
   handleClick = (event) => {
     event.preventDefault();
     this.validateForm();
-    // const { erro } = this.state;
-    // if (erro) return
-    this.setProductEvaluation();
   };
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => {
+      const isValid = this.isFormValid();
+      this.setState({
+        erro: isValid,
+      });
+    });
   };
 
   getProductEvaluation = () => {
@@ -54,6 +80,15 @@ export default class ProductDetails extends Component {
     return JSON.parse(localStorage.getItem(id));
   };
 
+  clearInputs = () => {
+    this.setState({
+      email: '',
+      erro: false,
+      text: '',
+      rating: '',
+    });
+  };
+
   setProductEvaluation = () => {
     const { email, text, rating, erro } = this.state;
     if (erro) return;
@@ -62,10 +97,11 @@ export default class ProductDetails extends Component {
     const savedProductEvaluation = this.getProductEvaluation();
     savedProductEvaluation.push({ email, text, rating });
     localStorage.setItem(id, JSON.stringify(savedProductEvaluation));
+    this.clearInputs();
   };
 
   render() {
-    const { guardProducts, erro, email, text } = this.state;
+    const { guardProducts, erro, email, text, comments } = this.state;
     const array = [];
     const MAX_NUMBER = 5;
     for (let index = 1; index <= MAX_NUMBER; index += 1) {
@@ -73,6 +109,7 @@ export default class ProductDetails extends Component {
         <label
           htmlFor={ `${index}-rating` }
           data-testid={ `${index}-rating` }
+          key={ `${index}-rating` }
         >
           <input
             type="radio"
@@ -137,6 +174,20 @@ export default class ProductDetails extends Component {
           </div>
         </form>
         { erro && <p data-testid="error-msg">Campos inválidos</p> }
+
+        <section>
+          {
+            comments.length > 0 && (
+              comments.map((coment, index) => (
+                <div key={ coment + index }>
+                  <h5 data-testid="review-card-email">{coment.email}</h5>
+                  <span data-testid="review-card-rating">{coment.rating}</span>
+                  <p data-testid="review-card-evaluation">{coment.text}</p>
+                </div>
+              ))
+            )
+          }
+        </section>
       </div>
     );
   }
