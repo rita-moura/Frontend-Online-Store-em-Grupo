@@ -1,0 +1,7 @@
+.error-msg {
+  display: none;
+}
+
+.form-checkout:invalid .error-msg {
+  display: block;
+}
