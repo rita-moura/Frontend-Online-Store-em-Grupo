@@ -44,6 +44,7 @@ export default class Cart extends Component {
             ))
           )
         }
+        <Link to="/checkout" data-testid="checkout-products">Checkout</Link>
       </main>
     );
   }

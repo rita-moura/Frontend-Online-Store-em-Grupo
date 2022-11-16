@@ -4,6 +4,7 @@ import './App.css';
 import Cart from './pages/Cart';
 import ProductListing from './pages/ProductListing';
 import ProductDetails from './pages/ProductDetails';
+import Checkout from './pages/Checkout';
 import './assets/styles/GeneralStyles.css';
 
 function App() {
@@ -23,7 +24,11 @@ function App() {
         exact
         path="/productdetails/:id"
         component={ ProductDetails }
-
+      />
+      <Route
+        exact
+        path="/checkout"
+        component={ Checkout }
       />
     </Switch>
   );
